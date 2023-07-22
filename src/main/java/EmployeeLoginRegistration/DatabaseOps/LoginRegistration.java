@@ -49,10 +49,11 @@ public class LoginRegistration {
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
                     // Employee with the given email_id and password exists
-                    return "Login successful";
+                    return "{ \"Response\": \"Login successful\"," +
+                            "\"role\": \"" + rs.getString("role") + "\" }";
                 } else {
                     // No employee with the given email_id and password exists
-                    return "Login failed";
+                    return "{ \"Response\": \"Login failed\"}";
                 }
             }
         } catch (SQLException e) {
