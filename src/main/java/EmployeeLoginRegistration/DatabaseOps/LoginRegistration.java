@@ -22,6 +22,7 @@ public class LoginRegistration {
 
                 int affectedRows = stmt.executeUpdate();
                 if (affectedRows > 0) {
+
                     ResultSet generatedKeys = stmt.getGeneratedKeys();
                     if (generatedKeys.next()) {
                         int generatedId = generatedKeys.getInt(1);
@@ -36,7 +37,6 @@ public class LoginRegistration {
         }
         return "Failed to register employee.";
     }
-
 
     public static String loginEmployee(String email, String password) {
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
