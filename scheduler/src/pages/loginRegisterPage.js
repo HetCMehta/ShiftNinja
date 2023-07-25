@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Box, Container, Grid, Paper, Typography, CssBaseline } from '@mui/material';
+import { Box, Container, Grid, Paper, Typography, CssBaseline } from '@mui/material';
 import LoginForm from './loginForm';
 import RegisterForm from './registerForm';
 import '../styling.css'; 
