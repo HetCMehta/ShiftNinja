@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
     ScheduleComponent, Week, Inject,
-    ViewsDirective, ViewDirective
+    ViewsDirective, ViewDirective, DragAndDrop
 } from '@syncfusion/ej2-react-schedule';
 import "./landingPage.css";
 
@@ -31,7 +31,7 @@ const LandingPage = () => {
                 <ViewsDirective>
                     <ViewDirective option='Week'></ViewDirective>
                 </ViewsDirective>
-                <Inject services={[Week]} />
+                <Inject services={[Week,DragAndDrop]} />
             </ScheduleComponent>
         </div>
     );
