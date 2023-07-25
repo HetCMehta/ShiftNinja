@@ -43,7 +43,7 @@ const Login = () => {
   };
 
   return (
-    <div className="login-page">
+    <div className="login-page login-background-container">
       
       <div className="login-header">
           <h1>Schedule Application</h1>
