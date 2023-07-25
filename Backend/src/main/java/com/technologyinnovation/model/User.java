@@ -17,9 +17,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String username;
+    private String username; // This is email
     @Column
     private String password;
+
+    private String name; // The name of the user
+
+    private String organizationNumber;
 
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
