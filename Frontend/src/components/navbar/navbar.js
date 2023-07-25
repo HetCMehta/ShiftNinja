@@ -37,7 +37,9 @@ export default function ButtonAppBar() {
                             <Button onClick={(event) => {
                                 navigate("/available_shifts");
                             }} className='nav-buttons' sx={{ backgroundColor: 'white', marginRight: '1rem', color: url.includes("/available_shifts") ? selectedRouteColor : 'black' }}>Available Shifts</Button></>)}
-                    <Button className='nav-buttons logout' sx={{ backgroundColor: 'white', color: 'black' }}>Logout</Button>
+                    <Button className='nav-buttons logout' onClick={()=>{
+                        navigate("/");
+                    }} sx={{ backgroundColor: 'white', color: 'black' }}>Logout</Button>
                 </Toolbar>
             </AppBar>
         </Box>
