@@ -17,6 +17,8 @@ public class Event {
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
 
+    private boolean approved;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

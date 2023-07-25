@@ -5,15 +5,16 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5232/technologyinnovation
+    url: jdbc:mysql://db:3306/shiftninja
     username: technologyinnovation
     password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
     show-sql: false
   main:
