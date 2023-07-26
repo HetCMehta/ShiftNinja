@@ -23,13 +23,13 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public boolean login(User user) {
+    public User login(User user) {
         User storedUser = userRepository.findByUsername(user.getUsername());
         if (storedUser != null && storedUser.getPassword().equals(user.getPassword())) {
             loggedInUserId = storedUser.getId();
-            return true;
+            return storedUser; // Return the whole user object
         }
-        return false;
+        return null; // Return null if login fails
     }
 
     @Override
