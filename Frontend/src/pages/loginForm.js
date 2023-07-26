@@ -47,34 +47,41 @@ const LoginForm = ({ handleChangeForm }) => {
     if (validateForm()) {
       try {
         // Send a POST request to the API endpoint
-        const response = await axios.post('http://localhost:3030/api/employees/login', {
-          "email_id": email,
+        const response = await axios.post('http://localhost:8080/users/login', {
+          "username": email,
           "password": password,
         },{headers
-        :{
+        :{  
           "Access-Control-Allow-Origin":"*"
         }});
 
-        const { Response, role } = response.data;
+        const responseData = response.data;
 
-        if (Response === 'Login successful') {
-          if (role === 'Employee') {
-            sessionStorage.setItem("email", email);
-            navigate('/employeehomepage');
-            console.log('Login form submitted');
-          } else if (role === 'Manager'){
-            sessionStorage.setItem("email", email);
-            navigate('/employeehomepage');
-            console.log('Login form submitted');
-          }
-        } else {
-          // Handle login failed
+        if (Object.keys(responseData).length !== 0) {
+        // The response data is not empty, assuming login was successful
+        const { userRole } = responseData;
+
+        if (userRole === 'EMPLOYEE') {
+          sessionStorage.setItem('email', email);
+          sessionStorage.setItem('role', userRole);
+          navigate('/employeehomepage');
+          console.log('Login form submitted');
+        } else if(userRole === 'MANAGER'){
+          sessionStorage.setItem('email', email);
+          sessionStorage.setItem('role', userRole);
+          navigate('/managerhomepage');
+        }else {
+          // Handle login failed or unauthorized user role
           alert('Login failed. Please check your credentials.');
         }
-      } catch (error) {
-        // Handle API error or network issues
-        console.error('Error occurred while calling the API:', error);
-        alert('An error occurred. Please try again later.');
+      } else {
+        // Handle login failed (empty response)
+        alert('Login failed. Please check your credentials.');
+      }
+     } catch (error) {
+      // Handle API error or network issues
+      console.error('Error occurred while calling the API:', error);
+      alert('An error occurred. Please try again later.');
       }
     }
   };

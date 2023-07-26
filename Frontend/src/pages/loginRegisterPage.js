@@ -1,14 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Box, Container, Grid, Paper, Typography, CssBaseline } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
 import LoginForm from './loginForm';
 import RegisterForm from './registerForm';
 import '../styling.css'; 
 const LoginRegisterPage = () => {
   const [isLoginForm, setIsLoginForm] = useState(true);
+  const navigate = useNavigate();
 
   const handleChangeForm = () => {
     setIsLoginForm((prev) => !prev);
   };
+
+  useEffect(() => {
+    const email = sessionStorage.getItem('email');
+    const role = sessionStorage.getItem('role');
+
+    if (email && role==='EMPLOYEE'){
+      navigate('/employeehomepage');
+    }else if(email && role==='MANAGER'){
+      navigate('/managerhomepage');
+    }
+  });
 
   return (
     <Box
