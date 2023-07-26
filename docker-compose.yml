@@ -11,7 +11,7 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "3307:3306"
     networks:
       - shiftninja
     restart: unless-stopped
@@ -31,18 +31,18 @@ services:
 
   frontend:
     container_name: sn_frontend
-  build:
-    context: ./Frontend
-    dockerfile: Dockerfile
-  volumes:
-    - ./Frontend/nginx-config:/etc/nginx/conf.d
-  ports:
-    - "80:80"
-  networks:
-    -shiftninja
-  depends_on:
-    -sn_backend
-  restart: unless-stopped
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./Frontend/nginx-config:/etc/nginx/conf.d
+    ports:
+      - "80:80"
+    networks:
+      - shiftninja
+    depends_on:
+      - backend
+    restart: unless-stopped
 
 networks:
   shiftninja:

@@ -12,7 +12,7 @@ COPY src ./src
 RUN mvn package
 
 # Rename the JAR file to app.jar
-RUN mv target/technology-innovation-mvp-0.0.1-SNAPSHOT.jar target/app.jar
+RUN mv target/shiftninja-0.0.1.jar target/app.jar
 
 # Set the entry point to run the Spring Boot application
 ENTRYPOINT ["java", "-jar", "target/app.jar"]
