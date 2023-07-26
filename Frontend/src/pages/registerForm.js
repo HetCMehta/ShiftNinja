@@ -11,7 +11,7 @@ const RegisterForm = ({ handleChangeForm }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [organizationNumber, setOrganizationNumber] = useState('');
-  const [role, setRole] = useState('Employee');
+  const [role, setRole] = useState('EMPLOYEE');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState({
@@ -81,39 +81,45 @@ const RegisterForm = ({ handleChangeForm }) => {
     console.log("role:" + role);
     
     if (validateForm()) {
-        
-          if (role) {
-            const response = await axios.post('http://localhost:8080/users/signup', {
-                "name": name,
-                "username": email,
-                "password": password,
-                "organizationNumber":organizationNumber,
-                "userRole":role.toUpperCase()
-            },{headers
-              :{
-                "Access-Control-Allow-Origin":"*"
-              }});
-    
-            if (response.status === 201) {
-                sessionStorage.setItem("email", email);
-                sessionStorage.setItem("role", role.toUpperCase());
-                if (role.toUpperCase() === 'EMPLOYEE') {
-                    navigate('/my_shifts');
-              } else if (role.toUpperCase() === 'MANAGER'){
-                navigate('/schedule');
-              }
-            } else {
-              // Handle login failed
-              alert('Registration failed.');
+      try {
+        if (role !== undefined) {
+          const response = await axios.post('http://localhost:8080/users/signup', {
+            name: name,
+            username: email,
+            password: password,
+            organizationNumber: organizationNumber,
+            userRole: role
+          },{headers:{
+              "Access-Control-Allow-Origin":"*"
+          }});
+  
+          const responseData = response.data;
+  
+          if (responseData.id) {
+            // Assuming the "id" field is present in the response data
+            if (responseData.userRole === 'EMPLOYEE') {
+              sessionStorage.setItem('email', email);
+              sessionStorage.setItem('role', responseData.userRole);
+              navigate('/employeehomepage');
+            } else if (responseData.userRole === 'MANAGER') {
+              sessionStorage.setItem('email', email);
+              sessionStorage.setItem('role', responseData.userRole);
+              navigate('/managerhomepage');
             }
             console.log('Registration form submitted');
-          } 
-           else { 
-              // Handle API error or network issues
-              console.error('Error occurred while calling the API:');
-              alert('An error occurred. Please try again later.');
+          } else {
+            // Handle registration failed
+            alert('Registration failed.');
           }
-            // Send a POST request to the API endpoint
+        } else {
+          // Handle role not defined
+          alert('Role is not defined.');
+        }
+      } catch (error) {
+        // Handle API error or network issues
+        console.error('Error occurred while calling the API:', error);
+        alert('An error occurred. Please try again later.');
+      }
     }
   };
 
@@ -212,8 +218,8 @@ const RegisterForm = ({ handleChangeForm }) => {
           <FormControl variant="outlined" fullWidth margin="normal">
             <InputLabel>Role</InputLabel>
             <Select value={role} onChange={(e) => setRole(e.target.value)}>
-              <MenuItem value="Employee">Employee</MenuItem>
-              <MenuItem value="Manager">Manager</MenuItem>
+              <MenuItem value="EMPLOYEE">Employee</MenuItem>
+              <MenuItem value="MANAGER">Manager</MenuItem>
             </Select>
           </FormControl>
         </Grid>

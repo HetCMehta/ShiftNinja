@@ -23,12 +23,14 @@ public class UserController {
         this.userService = userService;
     }
 
+    @CrossOrigin
     @PostMapping("/signup")
     public ResponseEntity<User> signUp(@RequestBody User user) {
         User createdUser = userService.signUp(user);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
-
+    
+    @CrossOrigin
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody User user) {
         User authenticatedUser = userService.login(user);
