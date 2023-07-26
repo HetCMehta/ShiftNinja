@@ -29,21 +29,6 @@ services:
       - db
     restart: unless-stopped
 
-  frontend:
-    container_name: sn_frontend
-    build:
-      context: ./Frontend
-      dockerfile: Dockerfile
-    volumes:
-      - ./Frontend/nginx-config:/etc/nginx/conf.d
-    ports:
-      - "80:80"
-    networks:
-      - shiftninja
-    depends_on:
-      - backend
-    restart: unless-stopped
-
 networks:
   shiftninja:
     driver: bridge

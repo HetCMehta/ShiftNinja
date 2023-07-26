@@ -1,15 +1,22 @@
-let BASE_URL;
+import { schedule } from "./mockData";
 
-if (process.env.NODE_ENV === "development") {
-    BASE_URL = "http://localhost:6400/";
-} else {
-    BASE_URL = "https://your-server-url/";
-}
+let BASE_URL = "http://localhost:8080";
 
 export const API_URLS = {
+    login: `${BASE_URL}/users/login`,
     myShifts: `${BASE_URL}/all-events`,
     availableShifts: `${BASE_URL}/postSomething`,
     postShifts: `${BASE_URL}/postSomething`,
-    schedule: `${BASE_URL}/all-events`
+    schedule: `${BASE_URL}/events`
     // You can add more URLs here...
+};
+
+
+
+export const fetchSchedule = () => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(schedule);
+        }, 1000);
+    });
 };

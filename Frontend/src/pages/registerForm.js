@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, FormControl, InputAdornment, InputLabel, MenuItem, Select, TextField,Grid } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const RegisterForm = ({ handleChangeForm }) => {
@@ -82,27 +82,25 @@ const RegisterForm = ({ handleChangeForm }) => {
     
     if (validateForm()) {
         
-          if (role !== undefined) {
-            const response = await axios.post('http://localhost:3030/api/employees/registration', {
+          if (role) {
+            const response = await axios.post('http://localhost:8080/users/signup', {
                 "name": name,
-                "email_id": email,
+                "username": email,
                 "password": password,
-                "company_code":organizationNumber,
-                "role":role
+                "organizationNumber":organizationNumber,
+                "userRole":role.toUpperCase()
             },{headers
               :{
                 "Access-Control-Allow-Origin":"*"
               }});
     
-            const { Response, role } = response.data;
-    
-            if (Response === 'Registration successful') {
+            if (response.status === 201) {
                 sessionStorage.setItem("email", email);
-                console.log('Login form submitted');
-                if (role === 'Employee') {
-                    navigate('/employeehomepage');
-              } else if (role === 'Manager'){
-                navigate('/managerhomepage');
+                sessionStorage.setItem("role", role.toUpperCase());
+                if (role.toUpperCase() === 'EMPLOYEE') {
+                    navigate('/my_shifts');
+              } else if (role.toUpperCase() === 'MANAGER'){
+                navigate('/schedule');
               }
             } else {
               // Handle login failed

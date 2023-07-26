@@ -47,20 +47,20 @@ const LoginForm = ({ handleChangeForm }) => {
     if (validateForm()) {
       try {
         // Send a POST request to the API endpoint
-        const response = await axios.post('http://localhost:3030/api/employees/login', {
-          "email_id": email,
+        const response = await axios.post('http://localhost:8080/users/login', {
+          "username": email,
           "password": password,
         },{headers
         :{
           "Access-Control-Allow-Origin":"*"
         }});
-
+        console.log(response);
         const { Response, role } = response.data;
 
         if (Response === 'Login successful') {
-          if (role === 'Employee') {
+          if (role.toUpperCase() === 'Employee') {
             sessionStorage.setItem("email", email);
-            navigate('/employeehomepage');
+            navigate('/');
             console.log('Login form submitted');
           } else if (role === 'Manager'){
             sessionStorage.setItem("email", email);

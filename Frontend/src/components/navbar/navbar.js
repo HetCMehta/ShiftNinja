@@ -13,7 +13,7 @@ export default function ButtonAppBar() {
     const location = useLocation();
     const [url,setUrl] = React.useState(location.pathname);
     const navigate = useNavigate();
-    const role = window.localStorage.getItem("userRole") ? window.localStorage.getItem("userRole") : 'employee';
+    const role = 'manager';//window.localStorage.getItem("userRole") ? window.localStorage.getItem("userRole") : 'employee';
     
     React.useEffect(()=>{
         setUrl(location.pathname);
