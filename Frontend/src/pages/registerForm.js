@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { API_URLS } from '../apiConfig';
 
-const RegisterForm = ({ handleChangeForm }) => {
+const RegisterForm = ({ handleChangeForm, onRegisterSuccess }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -76,6 +76,7 @@ const RegisterForm = ({ handleChangeForm }) => {
     e.preventDefault();
     
     if (validateForm()) {
+      
       try {
         if (role !== undefined) {
           const response = await axios.post(API_URLS.signup, {
@@ -93,8 +94,14 @@ const RegisterForm = ({ handleChangeForm }) => {
           if (responseData.id) {
             // Assuming the "id" field is present in the response data
             localStorage.setItem('userData', JSON.stringify(responseData));
-            //window.location.reload();
-            alert("Registration Successfull");
+            if(responseData.userRole === "EMPLOYEE"){
+              onRegisterSuccess();
+            }else if(responseData.userRole === "MANAGER"){
+              onRegisterSuccess();
+            } else{
+              alert("undefined role");
+            }
+
           } else {
             // Handle registration failed
             alert('Registration failed.');
