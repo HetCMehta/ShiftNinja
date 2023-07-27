@@ -73,12 +73,6 @@ const RegisterForm = ({ handleChangeForm }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log("name:" + name);
-    console.log("email_id:" + email);
-    console.log("password:" + password);
-    console.log("company code:" + organizationNumber);
-    console.log("role:" + role);
     
     if (validateForm()) {
       try {
@@ -94,19 +88,10 @@ const RegisterForm = ({ handleChangeForm }) => {
           }});
   
           const responseData = response.data;
-  
           if (responseData.id) {
             // Assuming the "id" field is present in the response data
-            if (responseData.userRole === 'EMPLOYEE') {
-              sessionStorage.setItem('email', email);
-              sessionStorage.setItem('role', responseData.userRole);
-              navigate('/employeehomepage');
-            } else if (responseData.userRole === 'MANAGER') {
-              sessionStorage.setItem('email', email);
-              sessionStorage.setItem('role', responseData.userRole);
-              navigate('/managerhomepage');
-            }
-            console.log('Registration form submitted');
+            navigate("/");
+
           } else {
             // Handle registration failed
             alert('Registration failed.');

@@ -60,16 +60,11 @@ const LoginForm = ({ handleChangeForm }) => {
         if (Object.keys(responseData).length !== 0) {
         // The response data is not empty, assuming login was successful
         const { userRole } = responseData;
-
+        localStorage.setItem('userData', JSON.stringify(responseData));
         if (userRole === 'EMPLOYEE') {
-          sessionStorage.setItem('email', email);
-          sessionStorage.setItem('role', userRole);
-          navigate('/employeehomepage');
-          console.log('Login form submitted');
+          navigate('/my_shifts');
         } else if(userRole === 'MANAGER'){
-          sessionStorage.setItem('email', email);
-          sessionStorage.setItem('role', userRole);
-          navigate('/managerhomepage');
+          navigate("/schedule");
         }else {
           // Handle login failed or unauthorized user role
           alert('Login failed. Please check your credentials.');

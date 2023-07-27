@@ -1,12 +1,14 @@
 
-import { BrowserRouter, Routes,Route, useLocation} from 'react-router-dom';
+import { BrowserRouter, Routes,Route} from 'react-router-dom';
 import LoginRegisterPage from './pages/loginRegisterPage';
-import LandingPage from './pages/landingPage/landingPage';
 import { registerLicense } from '@syncfusion/ej2-base';
 import ButtonAppBar from './components/navbar/navbar';
 import './App.css';
 import CurrentSchedule from './pages/schedule/current_schedule';
 import PostSchedule from './pages/schedule/post_schedule';
+import ApproveShifts from './pages/schedule/approve_shifts';
+import MySchedule from './pages/shifts/my_shifts';
+import AvailableShifts from './pages/shifts/available_shifts';
 
 function App() {
   registerLicense("Ngo9BigBOggjHTQxAR8/V1NGaF5cXmpCdkx0Rnxbf1xzZFRMZVxbQXBPIiBoS35RdUVkW3tfdHVRRmVVV0J3");
@@ -20,8 +22,9 @@ function App() {
           <Route path="/" element={<LoginRegisterPage />} />
           <Route path="/schedule" element={<CurrentSchedule></CurrentSchedule>}></Route>
           <Route path="/post_shifts" element={<PostSchedule></PostSchedule>}></Route>
-          <Route path="/my_shifts" element={<LandingPage props={"3"}></LandingPage>}></Route>
-          <Route path="/available_shifts" element={<LandingPage props={"4"}></LandingPage>}></Route>
+          <Route path='/approve_shifts' element={<ApproveShifts></ApproveShifts>}></Route>
+          <Route path="/my_shifts" element={<MySchedule></MySchedule>}></Route>
+          <Route path="/available_shifts" element={<AvailableShifts></AvailableShifts>}></Route>
         </Routes>
       </main>
     </BrowserRouter>

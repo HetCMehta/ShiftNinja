@@ -13,8 +13,7 @@ export default function ButtonAppBar() {
     const location = useLocation();
     const [url,setUrl] = React.useState(location.pathname);
     const navigate = useNavigate();
-    const role = 'manager';//window.localStorage.getItem("userRole") ? window.localStorage.getItem("userRole") : 'employee';
-    
+    const userData = JSON.parse(localStorage.getItem('userData'));
     React.useEffect(()=>{
         setUrl(location.pathname);
     }, [location.pathname]);
@@ -26,18 +25,21 @@ export default function ButtonAppBar() {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Scheduler
                     </Typography>
-                    {role === 'manager' ? (<><Button onClick={(event) => {
+                    {userData?.userRole && userData.userRole === 'MANAGER' ? (<><Button onClick={(event) => {
                         navigate("/schedule");
                     }} className='nav-buttons' sx={{ backgroundColor: 'white', marginRight: '1rem', color: url.includes("/schedule") ? selectedRouteColor : 'black' }}>Current Schedule</Button>
                         <Button onClick={(event) => {
                             navigate("/post_shifts");
-                        }} className='nav-buttons' sx={{ backgroundColor: 'white', marginRight: '1rem', color: url.includes("/post_shifts") ? selectedRouteColor : 'black' }}>Post Shifts</Button></>) : (<><Button onClick={(event) => {
+                        }} className='nav-buttons' sx={{ backgroundColor: 'white', marginRight: '1rem', color: url.includes("/post_shifts") ? selectedRouteColor : 'black' }}>Post Shifts</Button><Button onClick={(event) => {
+                            navigate("/approve_shifts");
+                        }} className='nav-buttons' sx={{ backgroundColor: 'white', marginRight: '1rem', color: url.includes("/approve_shifts") ? selectedRouteColor : 'black' }}>Approve Shifts</Button></>) : (<><Button onClick={(event) => {
                             navigate("/my_shifts");
                         }} className='nav-buttons' sx={{ backgroundColor: 'white', marginRight: '1rem', color: url.includes("/my_shifts") ? selectedRouteColor : 'black' }}>My Shifts</Button>
                             <Button onClick={(event) => {
                                 navigate("/available_shifts");
                             }} className='nav-buttons' sx={{ backgroundColor: 'white', marginRight: '1rem', color: url.includes("/available_shifts") ? selectedRouteColor : 'black' }}>Available Shifts</Button></>)}
                     <Button className='nav-buttons logout' onClick={()=>{
+                        window.localStorage.clear();
                         navigate("/");
                     }} sx={{ backgroundColor: 'white', color: 'black' }}>Logout</Button>
                 </Toolbar>

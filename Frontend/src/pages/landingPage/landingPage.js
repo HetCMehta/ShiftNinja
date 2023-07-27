@@ -110,7 +110,7 @@ const LandingPage = () => {
     };
 
     const onPopupOpen = (args) => {
-        console.log("current path",args);
+ 
         if (currentPath === "/available_shifts") {
             if (args.type === 'QuickInfo' && args.data.Subject) {
                 const quickPopup = args.element;

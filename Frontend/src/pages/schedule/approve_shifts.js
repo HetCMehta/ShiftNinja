@@ -1,4 +1,3 @@
-
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { API_URLS } from "../../apiConfig";
@@ -10,11 +9,11 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import "./schedule.css";
 
-const MySchedule = () => {
-    const postShiftSettings = {
-        Subject: 'your shift',
+const ApproveShifts = () => {
+    const scheduleSettings = {
+        Subject: 'userId',
         categoryColor: '#1B76D2',
-        IsReadonly: true,
+        IsReadonly: false
     };
 
     const userData = JSON.parse(localStorage.getItem('userData'));
@@ -24,18 +23,12 @@ const MySchedule = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [shifts, setShifts] = useState([]);
 
-    const toADTISOString = (date) => {
-        let adtDate = new Date(date.getTime() - (3 * 60 * 60 * 1000));
-        let adtISOString = adtDate.toISOString().slice(0, 19);
-        return adtISOString;
-    }
-
     const onActionComplete = (args) => {
         let newshiftData = {};
         if (args.data) {
             const data = args.data[0];
-            newshiftData['startDateTime'] = toADTISOString(new Date(data.StartTime));
-            newshiftData['endDateTime'] = toADTISOString(new Date(data.EndTime));
+            newshiftData['startDateTime'] = new Date(data.StartTime).toISOString().slice(0, 19);
+            newshiftData['endDateTime'] = new Date(data.EndTime).toISOString().slice(0, 19);
         } else {
             return;
         }
@@ -53,6 +46,7 @@ const MySchedule = () => {
     };
 
     const onEventRendered = (args) => {
+
         let categoryColor = args.data.categoryColor;
         const el = args.element;
 
@@ -64,10 +58,9 @@ const MySchedule = () => {
         }
     };
 
-
     const processShift = (shift) => {
         return {
-            ...postShiftSettings,
+            ...scheduleSettings,
             StartTime: shift.startDateTime,
             EndTime: shift.endDateTime,
             Id: shift.id,
@@ -78,7 +71,6 @@ const MySchedule = () => {
 
     async function postShift(shift) {
         axios.post(API_URLS.postShifts, shift).then((res) => {
-            getShifts();
         }).catch((error) => {
             console.error(error);
         });
@@ -90,7 +82,7 @@ const MySchedule = () => {
             .then((res) => {
                 const data = res.data;
                 if (Array.isArray(data)) {
-                    setShifts(data.map(processShift));
+                    setShifts(data.map(processShift).filter(shift => shift.approved === false));
                 }
                 setIsLoading(false);
             })
@@ -116,6 +108,7 @@ const MySchedule = () => {
         getShifts();
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
+
     }, [])
 
     return (
@@ -139,4 +132,4 @@ const MySchedule = () => {
     )
 }
 
-export default MySchedule;
+export default ApproveShifts;

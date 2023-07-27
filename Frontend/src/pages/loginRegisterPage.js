@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Box, Container, Grid, Paper, Typography, CssBaseline } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Box, Container, Grid, Paper, Typography, CssBaseline } from '@mui/material';
+import {  useNavigate } from 'react-router-dom';
 import LoginForm from './loginForm';
 import RegisterForm from './registerForm';
 import '../styling.css';
@@ -13,13 +13,12 @@ const LoginRegisterPage = () => {
   };
 
   useEffect(() => {
-    const email = sessionStorage.getItem('email');
-    const role = sessionStorage.getItem('role');
+    const userData = JSON.parse(localStorage.getItem('userData'));
 
-    if (email && role==='EMPLOYEE'){
-      navigate('/employeehomepage');
-    }else if(email && role==='MANAGER'){
-      navigate('/managerhomepage');
+    if (userData?.username && userData?.userRole==='EMPLOYEE'){
+      navigate('/my_shifts');
+    }else if(userData?.username && userData?.userRole==='MANAGER'){
+      navigate('/schedule');
     }
   });
 
