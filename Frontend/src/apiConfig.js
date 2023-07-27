@@ -1,4 +1,4 @@
-let BASE_URL = "http://localhost:8080";
+let BASE_URL = "http://shiftninja.canadacentral.cloudapp.azure.com:8080";
 
 export const API_URLS = {
     login: `${BASE_URL}/users/login`,
