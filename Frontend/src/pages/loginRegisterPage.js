@@ -12,6 +12,10 @@ const LoginRegisterPage = () => {
     setIsLoginForm((prev) => !prev);
   };
 
+  const handleRegisterSuccess = () => {
+    setIsLoginForm(true); // Switch to the login form after successful registration
+  };
+
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('userData'));
 
@@ -69,7 +73,10 @@ const LoginRegisterPage = () => {
                       />
                     </Grid>
                     <Grid item xs={12} md={6}>
-                      <RegisterForm handleChangeForm={handleChangeForm} />
+                      <RegisterForm
+                        handleChangeForm={handleChangeForm}
+                        onRegisterSuccess={handleRegisterSuccess} // Pass the new prop to RegisterForm
+                      />
                     </Grid>
                   </>
                 )}

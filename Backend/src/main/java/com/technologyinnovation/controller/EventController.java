@@ -55,4 +55,24 @@ public class EventController {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
+
+    @PutMapping("/update/{eventId}")
+    public ResponseEntity<Event> updateEvent(@PathVariable Long eventId, @RequestBody Event updatedEvent) {
+        User loggedInUser = userService.getLoggedInUser();
+        if (loggedInUser == null || loggedInUser.getUserRole() != UserRole.MANAGER) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        Event existingEvent = eventService.getEventById(eventId);
+        if (existingEvent == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        // Updating the necessary fields
+        existingEvent.setStartDateTime(updatedEvent.getStartDateTime());
+        existingEvent.setEndDateTime(updatedEvent.getEndDateTime());
+
+        Event updatedEventEntity = eventService.updateEvent(existingEvent);
+        return new ResponseEntity<>(updatedEventEntity, HttpStatus.OK);
+    }
 }

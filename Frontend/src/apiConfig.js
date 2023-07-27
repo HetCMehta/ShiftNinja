@@ -1,6 +1,6 @@
 import { schedule } from "./mockData";
 
-let BASE_URL = "http://backend:8080";
+let BASE_URL = "http://localhost:8080";
 
 export const API_URLS = {
     login: `${BASE_URL}/users/login`,
@@ -8,7 +8,8 @@ export const API_URLS = {
     myShifts: `${BASE_URL}/all-events`,
     availableShifts: `${BASE_URL}/postSomething`,
     postShifts: `${BASE_URL}/events`,
-    schedule: `${BASE_URL}/events`
+    schedule: `${BASE_URL}/events`,
+    approve: `${BASE_URL}/events/approve`
     // You can add more URLs here...
 };
 

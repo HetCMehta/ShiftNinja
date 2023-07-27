@@ -1,4 +1,3 @@
-
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { API_URLS } from "../../apiConfig";
@@ -10,10 +9,9 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import "./schedule.css";
 
-const MySchedule = () => {
-    const postShiftSettings = {
-        Subject: 'your shift',
-        categoryColor: '#1B76D2',
+const MyShifts = () => {
+    const availableShiftSettings = {
+        categoryColor: '#1b76d2',
         IsReadonly: true,
     };
 
@@ -23,34 +21,6 @@ const MySchedule = () => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [shifts, setShifts] = useState([]);
-
-    const toADTISOString = (date) => {
-        let adtDate = new Date(date.getTime() - (3 * 60 * 60 * 1000));
-        let adtISOString = adtDate.toISOString().slice(0, 19);
-        return adtISOString;
-    }
-
-    const onActionComplete = (args) => {
-        let newshiftData = {};
-        if (args.data) {
-            const data = args.data[0];
-            newshiftData['startDateTime'] = toADTISOString(new Date(data.StartTime));
-            newshiftData['endDateTime'] = toADTISOString(new Date(data.EndTime));
-        } else {
-            return;
-        }
-
-        if (args.requestType === 'eventCreated') {
-            postShift(newshiftData);
-        }
-
-        if (args.requestType === "eventChanged") {
-        }
-
-        if (args.requestType === "eventRemoved") {
-
-        }
-    };
 
     const onEventRendered = (args) => {
         let categoryColor = args.data.categoryColor;
@@ -64,25 +34,30 @@ const MySchedule = () => {
         }
     };
 
+    const modifyForMyShifts = (shift) => {
+        const date = new Date(shift?.StartTime);
+        const today = new Date();
+
+        if (date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear() && date.getDate() === today.getDate()) {
+            shift.Subject = "Your next shift is today";
+        } else {
+            shift.Subject = date.toLocaleDateString("en-US", { weekday: 'long' });
+        }
+
+        return shift;
+    };
 
     const processShift = (shift) => {
-        return {
-            ...postShiftSettings,
+        return modifyForMyShifts({
+            ...availableShiftSettings,
             StartTime: shift.startDateTime,
             EndTime: shift.endDateTime,
             Id: shift.id,
             approved: shift.approved,
-            user: shift.user
-        };
-    };
-
-    async function postShift(shift) {
-        axios.post(API_URLS.postShifts, shift).then((res) => {
-            getShifts();
-        }).catch((error) => {
-            console.error(error);
+            user: shift.user,
+            Subject: shift.user.name
         });
-    }
+    };
 
     async function getShifts() {
         setIsLoading(true);
@@ -90,7 +65,7 @@ const MySchedule = () => {
             .then((res) => {
                 const data = res.data;
                 if (Array.isArray(data)) {
-                    setShifts(data.map(processShift));
+                    setShifts(data.map(processShift).filter(shift => shift.approved === true && shift.user.username === userData.username && shift.user.organizationNumber === userData.organizationNumber));
                 }
                 setIsLoading(false);
             })
@@ -127,7 +102,7 @@ const MySchedule = () => {
                 </div>
             ) : (
                 <ScheduleComponent width={windowDimensions.width - 128} height={windowDimensions.height - 128} eventSettings={{ dataSource: shifts }}
-                    eventRendered={onEventRendered} actionComplete={onActionComplete}
+                    eventRendered={onEventRendered}
                 >
                     <ViewsDirective>
                         <ViewDirective option='Week'></ViewDirective>
@@ -139,4 +114,4 @@ const MySchedule = () => {
     )
 }
 
-export default MySchedule;
+export default MyShifts;

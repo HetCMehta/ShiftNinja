@@ -83,11 +83,17 @@ import {
 } from '@syncfusion/ej2-react-schedule';
 import CircularProgress from '@mui/material/CircularProgress';
 
+import { createRoot } from 'react-dom/client';
+
+import { Button } from '@mui/material';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+
 import "./schedule.css";
 
 const PostSchedule = () => {
     const postShiftSettings = {
-        Subject: 'Posted',
         categoryColor: '#F57F16',
         IsReadonly: true,
     };
@@ -98,6 +104,9 @@ const PostSchedule = () => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [shifts, setShifts] = useState([]);
+
+    const [open, setOpen] = React.useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("");
 
     const toADTISOString = (date) => {
         let adtDate = new Date(date.getTime() - (3 * 60 * 60 * 1000));
@@ -139,6 +148,13 @@ const PostSchedule = () => {
         }
     };
 
+    const onPopupOpen = (args) => {
+        if (new Date(args?.data?.StartTime).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0)) {
+            args.cancel = true; 
+            setSnackbarMessage("Cannot Create events in past!");
+            setOpen(true);
+        }
+    }
 
     const processShift = (shift) => {
         return {
@@ -147,7 +163,9 @@ const PostSchedule = () => {
             EndTime: shift.endDateTime,
             Id: shift.id,
             approved: shift.approved,
-            user: shift.user
+            user: shift.user,
+            Subject: shift.approved ? "Posted (Approved)":"Posted",
+            
         };
     };
 
@@ -165,7 +183,7 @@ const PostSchedule = () => {
             .then((res) => {
                 const data = res.data;
                 if (Array.isArray(data)) {
-                    setShifts(data.map(processShift));
+                    setShifts(data.map(processShift).filter(shift => shift.approved === false && shift.user.userRole === "MANAGER" && shift.user.organizationNumber === userData.organizationNumber));
                 }
                 setIsLoading(false);
             })
@@ -193,6 +211,20 @@ const PostSchedule = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, [])
 
+    
+    const action = (
+        <React.Fragment>
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={() => { setOpen(false) }}
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </React.Fragment>
+    );
+
     return (
         <div className="scheduler-container">
             {isLoading ? (
@@ -202,7 +234,7 @@ const PostSchedule = () => {
                 </div>
             ) : (
                 <ScheduleComponent width={windowDimensions.width - 128} height={windowDimensions.height - 128} eventSettings={{ dataSource: shifts }}
-                    eventRendered={onEventRendered} actionComplete={onActionComplete}
+                    eventRendered={onEventRendered} actionComplete={onActionComplete} popupOpen={onPopupOpen}
                 >
                     <ViewsDirective>
                         <ViewDirective option='Week'></ViewDirective>
@@ -210,6 +242,15 @@ const PostSchedule = () => {
                     <Inject services={[Week, DragAndDrop]} />
                 </ScheduleComponent>
             )}
+            <Snackbar
+                open={open}
+                autoHideDuration={3000}
+                onClose={(event) => { setOpen(false) }}
+                message={snackbarMessage}
+                anchorOrigin={{ vertical: "top", horizontal: 'center' }}
+                action={action}
+            >
+            </Snackbar>
         </div>
     )
 }
