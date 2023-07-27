@@ -279,7 +279,6 @@ const AvailableShifts = () => {
             color="primary"
             sx={{ marginLeft: "0.5rem" }}
             onClick={() => {
-              console.log("custom time");
               const shift = {
                 startDateTime: toADTISOString(new Date(customStartTime)),
                 endDateTime: toADTISOString(new Date(customEndTime)),

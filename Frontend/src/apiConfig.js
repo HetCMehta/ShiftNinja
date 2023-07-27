@@ -8,7 +8,7 @@ export const API_URLS = {
     postShifts: `${BASE_URL}/events`,
     schedule: `${BASE_URL}/events`,
     approve: `${BASE_URL}/events/approve`,
-    update: `${BASE_URL}/events/update`
+    update: `${BASE_URL}/events/update/`
     // You can add more URLs here...
 };
 
