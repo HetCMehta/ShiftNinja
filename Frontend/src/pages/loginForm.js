@@ -3,6 +3,7 @@ import { Button, IconButton, InputAdornment, TextField } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { API_URLS } from '../apiConfig';
 
 const LoginForm = ({ handleChangeForm }) => {
   const [email, setEmail] = useState('');
@@ -47,7 +48,7 @@ const LoginForm = ({ handleChangeForm }) => {
     if (validateForm()) {
       try {
         // Send a POST request to the API endpoint
-        const response = await axios.post('http://localhost:8080/users/login', {
+        const response = await axios.post(API_URLS.login, {
           "username": email,
           "password": password,
         },{headers
