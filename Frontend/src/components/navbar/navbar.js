@@ -23,7 +23,7 @@ export default function ButtonAppBar() {
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        Scheduler
+                        ShiftNinja
                     </Typography>
                     {userData?.userRole && userData.userRole === 'MANAGER' ? (<><Button onClick={(event) => {
                         navigate("/schedule");
