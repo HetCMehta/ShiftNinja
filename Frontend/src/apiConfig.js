@@ -1,6 +1,4 @@
-import { schedule } from "./mockData";
-
-let BASE_URL = "http://shiftninja.canadacentral.cloudapp.azure.com:8080";
+let BASE_URL = "http://localhost:8080";
 
 export const API_URLS = {
     login: `${BASE_URL}/users/login`,
@@ -9,16 +7,8 @@ export const API_URLS = {
     availableShifts: `${BASE_URL}/postSomething`,
     postShifts: `${BASE_URL}/events`,
     schedule: `${BASE_URL}/events`,
-    approve: `${BASE_URL}/events/approve`
+    approve: `${BASE_URL}/events/approve`,
+    update: `${BASE_URL}/events/update`
     // You can add more URLs here...
 };
 
-
-
-export const fetchSchedule = () => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(schedule);
-        }, 1000);
-    });
-};
