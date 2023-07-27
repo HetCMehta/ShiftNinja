@@ -93,14 +93,8 @@ const RegisterForm = ({ handleChangeForm }) => {
           if (responseData.id) {
             // Assuming the "id" field is present in the response data
             localStorage.setItem('userData', JSON.stringify(responseData));
-            if(responseData.userRole === "EMPLOYEE"){
-              navigate("/my_shifts");
-            }else if(responseData.userRole === "MANAGER"){
-              navigate("/schedule");
-            } else{
-              alert("undefined role");
-            }
-
+            //window.location.reload();
+            alert("Registration Successfull");
           } else {
             // Handle registration failed
             alert('Registration failed.');

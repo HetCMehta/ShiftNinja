@@ -7,6 +7,10 @@ import {
 } from '@syncfusion/ej2-react-schedule';
 import CircularProgress from '@mui/material/CircularProgress';
 
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+
 import "./schedule.css";
 
 const CurrentSchedule = () => {
@@ -22,6 +26,9 @@ const CurrentSchedule = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [shifts, setShifts] = useState([]);
 
+    const [open, setOpen] = React.useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("");
+
     const onEventRendered = (args) => {
         let categoryColor = args.data.categoryColor;
         const el = args.element;
@@ -34,6 +41,11 @@ const CurrentSchedule = () => {
         }
     };
 
+    const onPopupOpen = (args) => {
+        args.cancel = true;
+        setSnackbarMessage("Please add shifts of POST SHIFTS page");
+        setOpen(true);
+    }
 
     const processShift = (shift) => {
         return {
@@ -81,6 +93,20 @@ const CurrentSchedule = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, [])
 
+    const action = (
+        <React.Fragment>
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={() => { setOpen(false) }}
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </React.Fragment>
+    );
+
+
     return (
         <div className="scheduler-container">
             {isLoading ? (
@@ -98,6 +124,15 @@ const CurrentSchedule = () => {
                     <Inject services={[Week, DragAndDrop]} />
                 </ScheduleComponent>
             )}
+             <Snackbar
+                open={open}
+                autoHideDuration={3000}
+                onClose={(event) => { setOpen(false) }}
+                message={snackbarMessage}
+                anchorOrigin={{ vertical: "top", horizontal: 'center' }}
+                action={action}
+            >
+            </Snackbar>
         </div>
     )
 }
