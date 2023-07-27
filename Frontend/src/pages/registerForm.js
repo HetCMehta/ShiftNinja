@@ -89,9 +89,17 @@ const RegisterForm = ({ handleChangeForm }) => {
           }});
   
           const responseData = response.data;
+          console.log(response.data);
           if (responseData.id) {
             // Assuming the "id" field is present in the response data
-            navigate("/");
+            localStorage.setItem('userData', JSON.stringify(responseData));
+            if(responseData.userRole === "EMPLOYEE"){
+              navigate("/my_shifts");
+            }else if(responseData.userRole === "MANAGER"){
+              navigate("/schedule");
+            } else{
+              alert("undefined role");
+            }
 
           } else {
             // Handle registration failed
@@ -104,6 +112,7 @@ const RegisterForm = ({ handleChangeForm }) => {
       } catch (error) {
         // Handle API error or network issues
         console.error('Error occurred while calling the API:', error);
+        console.log(error);
         alert('An error occurred. Please try again later.');
       }
     }

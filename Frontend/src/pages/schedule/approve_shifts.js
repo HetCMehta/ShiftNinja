@@ -1,3 +1,4 @@
+
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { API_URLS } from "../../apiConfig";
@@ -7,13 +8,20 @@ import {
 } from '@syncfusion/ej2-react-schedule';
 import CircularProgress from '@mui/material/CircularProgress';
 
+import { createRoot } from 'react-dom/client';
+
+//Snackbar Dependencies
+import { Button } from '@mui/material';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+
 import "./schedule.css";
 
 const ApproveShifts = () => {
-    const scheduleSettings = {
-        Subject: 'userId',
-        categoryColor: '#1B76D2',
-        IsReadonly: false
+    const approveShiftSettings = {
+        categoryColor: '#b65dc3',
+        IsReadonly: true
     };
 
     const userData = JSON.parse(localStorage.getItem('userData'));
@@ -22,31 +30,32 @@ const ApproveShifts = () => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [shifts, setShifts] = useState([]);
+    const [selectedShift, setSelectedShift] = useState({id: '' });
+    //Snackbar variables
+    const [open, setOpen] = React.useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("");
+
+    //convert Date
+    const toADTISOString = (date) => {
+        let adtDate = new Date(date.getTime() - (3 * 60 * 60 * 1000));
+        let adtISOString = adtDate.toISOString().slice(0, 19);
+        return adtISOString;
+    }
 
     const onActionComplete = (args) => {
+        /*
         let newshiftData = {};
         if (args.data) {
             const data = args.data[0];
-            newshiftData['startDateTime'] = new Date(data.StartTime).toISOString().slice(0, 19);
-            newshiftData['endDateTime'] = new Date(data.EndTime).toISOString().slice(0, 19);
+            newshiftData['startDateTime'] = toADTISOString(new Date(data.StartTime));
+            newshiftData['endDateTime'] = toADTISOString(new Date(data.EndTime));
         } else {
             return;
         }
-
-        if (args.requestType === 'eventCreated') {
-            postShift(newshiftData);
-        }
-
-        if (args.requestType === "eventChanged") {
-        }
-
-        if (args.requestType === "eventRemoved") {
-
-        }
+*/
     };
 
     const onEventRendered = (args) => {
-
         let categoryColor = args.data.categoryColor;
         const el = args.element;
 
@@ -58,19 +67,59 @@ const ApproveShifts = () => {
         }
     };
 
+
+    const onPopupOpen = (args) => {
+        if (new Date(args?.data?.StartTime).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0)) {
+            args.cancel = true;
+            setSnackbarMessage("Cannot select past Shifts");
+            setOpen(true);
+        }
+
+        let newshiftData = {};
+        newshiftData['id'] = args?.data?.Id;
+        setSelectedShift(newshiftData);
+        
+        if (args.type === 'QuickInfo' && args.data.Subject) {
+            const quickPopup = args.element;
+            const buttonContainer = document.createElement('div');
+            buttonContainer.classList.add("select-shift-container");
+            quickPopup.appendChild(buttonContainer);
+            const root = createRoot(buttonContainer);
+            root.render(<CustomButton></CustomButton>);
+        } else {
+            args.cancel = true;
+            setSnackbarMessage("Please add shifts of POST SHIFTS page");
+            setOpen(true);
+        }
+    }
+
     const processShift = (shift) => {
+
         return {
-            ...scheduleSettings,
+            ...approveShiftSettings,
             StartTime: shift.startDateTime,
             EndTime: shift.endDateTime,
             Id: shift.id,
             approved: shift.approved,
-            user: shift.user
+            user: shift.user,
+            Subject: "Request by " + shift.user.name
         };
     };
 
-    async function postShift(shift) {
-        axios.post(API_URLS.postShifts, shift).then((res) => {
+    const filterShifts = (shifts) => {
+        let today = new Date();
+        today.setHours(0, 0, 0, 0);
+        let processedShifts = shifts.filter(shift =>
+            Date.parse(shift.StartTime) > today.getTime() && !shift.approved && shift.user.userRole === "EMPLOYEE" && shift.user.organizationNumber === userData.organizationNumber
+        );
+        return processedShifts;
+    }
+
+    async function approveShift(shift) {
+        await axios.post(API_URLS.approve, shift).then((res) => {
+            setSnackbarMessage("Approved");
+            setOpen(true);
+            getShifts();
         }).catch((error) => {
             console.error(error);
         });
@@ -82,7 +131,7 @@ const ApproveShifts = () => {
             .then((res) => {
                 const data = res.data;
                 if (Array.isArray(data)) {
-                    setShifts(data.map(processShift).filter(shift => shift.approved === false));
+                    setShifts(filterShifts(data.map(processShift)));
                 }
                 setIsLoading(false);
             })
@@ -108,8 +157,50 @@ const ApproveShifts = () => {
         getShifts();
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
-
     }, [])
+
+    //Customs components for scheduler
+
+    function CustomButton() {
+        const [isLoading, setLoading] = useState(false);
+        useEffect(() => {
+            if (isLoading && selectedShift.id !== "") {
+                approveShift(selectedShift).then((res) => {
+                    setLoading(false);
+                }).catch((error) => {
+                    setSnackbarMessage("Error while Approving!!!");
+                    setOpen(true);
+                    setLoading(false);
+                });
+            }
+        }, [selectedShift, isLoading]);
+
+        return (
+            <Button
+                variant='outlined'
+                color="secondary"
+                onClick={(e) => {
+                    setLoading(true);
+                    approveShift(selectedShift);
+                }}
+            >
+                Approve Shift
+            </Button>
+        );
+    }
+
+    const action = (
+        <React.Fragment>
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={() => { setOpen(false) }}
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </React.Fragment>
+    );
 
     return (
         <div className="scheduler-container">
@@ -120,7 +211,7 @@ const ApproveShifts = () => {
                 </div>
             ) : (
                 <ScheduleComponent width={windowDimensions.width - 128} height={windowDimensions.height - 128} eventSettings={{ dataSource: shifts }}
-                    eventRendered={onEventRendered} actionComplete={onActionComplete}
+                    eventRendered={onEventRendered} actionComplete={onActionComplete} popupOpen={onPopupOpen}
                 >
                     <ViewsDirective>
                         <ViewDirective option='Week'></ViewDirective>
@@ -128,6 +219,15 @@ const ApproveShifts = () => {
                     <Inject services={[Week, DragAndDrop]} />
                 </ScheduleComponent>
             )}
+            <Snackbar
+                open={open}
+                autoHideDuration={3000}
+                onClose={(event) => { setOpen(false) }}
+                message={snackbarMessage}
+                anchorOrigin={{ vertical: "top", horizontal: 'center' }}
+                action={action}
+            >
+            </Snackbar>
         </div>
     )
 }
