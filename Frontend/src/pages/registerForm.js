@@ -4,6 +4,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { API_URLS } from '../apiConfig';
 
 const RegisterForm = ({ handleChangeForm }) => {
   const [name, setName] = useState('');
@@ -77,7 +78,7 @@ const RegisterForm = ({ handleChangeForm }) => {
     if (validateForm()) {
       try {
         if (role !== undefined) {
-          const response = await axios.post('http://localhost:8080/users/signup', {
+          const response = await axios.post(API_URLS.signup, {
             name: name,
             username: email,
             password: password,
