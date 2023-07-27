@@ -5,8 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 const Logout = () => {
     const navigate = useNavigate();
     const handleLogout = () => {
-        sessionStorage.removeItem('email');
-        sessionStorage.removeItem('role');
+        window.localStorage.removeItem('email');
+        window.localStorage.removeItem('role');
         navigate('/');
     };
 
