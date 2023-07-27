@@ -37,7 +37,7 @@ services:
     volumes:
       - ./Frontend/nginx-config:/etc/nginx/conf.d
     ports:
-      - "5100:80"
+      - "5000:80"
     networks:
       - shiftninja
     depends_on:
