@@ -1,113 +1,120 @@
-# Team3Project_TI5193
+<h1 style ="font-family: Arial" align="center"><b>ShiftNinja</b></h1>
 
-# Team Banner IDs
+<p style ="font-family: Arial">ShiftNinja is an application that aims to make the scheduling process simple and efficient for employees and managers alike.</p>
 
-B00922690 Brahmdeep Aneja <br>
-B00921449 Harmit Narula <br>
-#B00925864 Amandeep Singh
+<hr>
 
-#B00943028 Shahraj Singh
+<h2 style ="font-family: Arial">Developed by</h2> 
 
-#B00946400 Tanisha
+<table style="border-collapse: collapse;">
+    <tr style="border: none;">
+      <th style="border: none;">Member</th>
+      <th style="border: none;">Banner ID</th>
+      <th style="border: none;">Role</th>
+    </tr>
+    <tr style="border: none;">
+      <td style="border: none;">Brahmdeep Aneja</td>
+      <td style="border: none;">B00922690</td>
+      <td style="border: none;">Backend Developer</td>
+    </tr>
+    <tr style="border: none;">
+      <td style="border: none;">Harmit Narula</td>
+      <td style="border: none;">B00921449</td>
+      <td style="border: none;">Developer and cloud specialist</td>
+    </tr>
+    <tr style="border: none;">
+      <td style="border: none;">Amandeep Singh</td>
+      <td style="border: none;">B00925864</td>
+      <td style="border: none;">Backend Developer</td>
+    </tr>
+    <tr style="border: none;">
+      <td style="border: none;">Het Mehta</td>
+      <td style="border: none;">B00916261</td>
+      <td style="border: none;">Frontend Developer</td>
+    </tr>
+    <tr style="border: none;">
+      <td style="border: none;">Shahraj Singh</td>
+      <td style="border: none;">B00943028</td>
+      <td style="border: none;">Backend and Frontend Developer</td>
+    </tr>
+    <tr style="border: none;">
+      <td style="border: none;">Tanisha</td>
+      <td style="border: none;">B00946400</td>
+      <td style="border: none;">Backend Developer and Scrum master</td>
+    </tr>
+  </table>
 
-## Getting started
+<h2 style ="font-family: Arial">Build instructions</h2>
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+The application is divided into frontend and backend, the instruction below covers how to build both components and run them
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+<b>Backend</b></br>
 
-## Add your files
+Backend for this application has been written using Spring Boot that has been dockerized. To build the backend -
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+1. Navigate to the root folder using command (For instance)- *cd team3project_ti5193*
+2. Start your docker desktop application on your system 
+3. Run the command *docker compose build* to build the docker image and *docker compose up -d* to create containers and run the APIs on port 8080 
 
-```
-cd existing_repo
-git remote add origin https://git.cs.dal.ca/tanisha/team3project_ti5193.git
-git branch -M main
-git push -uf origin main
-```
+<figure align="center">
+  <img src="images\build_backend.png" alt="backend dependencies installation" width="400" />
+  <figcaption>Backend build and run.</figcaption>
+</figure>
 
-## Integrate with your tools
+<b>Frontend</b></br>
 
-- [ ] [Set up project integrations](https://git.cs.dal.ca/tanisha/team3project_ti5193/-/settings/integrations)
+Frontend for this application has been written using React. To build the frontend -
 
-## Collaborate with your team
+1. Navigate to the frontend folder using command (For instance) - *cd team3project_ti5193/Frontend*
+2. Run the command *npm i* to install all dependencies
+3. Run the command *npm start* to start the application at port 
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+<figure align="center">
+  <img src="images\Frontend.png" alt="backend dependencies installation" width="400" />
+  <figcaption>Frontend application.</figcaption>
+</figure>
 
-## Test and Deploy
+<h2 style ="font-family: Arial">Use Cases</h2> 
 
-Use the built-in continuous integration in GitLab.
+<b>Employee</b></br>
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+1. After logging in employee can see their schedule week's schedule 
+<figure align="center">
+  <img src="images\Employee_current_shift.png" alt="Employee current shift schedule" width="400" />
+  <figcaption>Employee Current Shift Schedule.</figcaption>
+</figure>
+2. Employee can also go to Available Shifts page and see all the available shifts and request for any shifts they want to work for.
+<figure align="center">
+  <img src="images\Employee_available_shifts.png" alt="Employee current shift schedule" width="400" />
+  <figcaption>Employee Available Shifts Schedule.</figcaption>
+</figure>
 
----
+<b>Manager</b></br>
 
-# Editing this README
+1. After logging in Managers can see the upcoming weeks' schedule and see specifics of a shift including time and employee details.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+<figure align="center">
+  <img src="images\Manager_current_shifts.png" alt="Employee current shift schedule" width="400" />
+  <figcaption>Manager Current Shift Schedule.</figcaption>
+</figure>
+2. Manager can also go to Post Shifts page and post a new shift availability which would be visible to employees and they can request for approval.
+<figure align="center">
+  <img src="images\Manager_post_shift.png" alt="Employee current shift schedule" width="400" />
+  <figcaption>Manager Post Shifts.</figcaption>
+</figure>
 
-## Suggestions for a good README
+3. After Employees have requested for approval for any shift, manager can check the requests in the Approve Shifts page and select the requests they want to approve, which will then be reflected in Employee's current schedule.
+<figure align="center">
+  <img src="images\Manager_approve_shifts.png" alt="Employee current shift schedule" width="400" />
+  <figcaption>Manager Post Shifts.</figcaption>
+</figure>
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+<h2 style ="font-family: Arial">Code References</h2>
 
-## Name
-
-Choose a self-explaining name for your project.
-
-## Description
-
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-
-Show your appreciation to those who have contributed to the project.
-
-## License
-
-For open source projects, say how it is licensed.
-
-## Project status
-
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+<ul style="list-style: none;">
+    [1] Arias, Dan. “The Complete Guide to React User Authentication with Auth0.” Auth0 - Blog, 18 Nov. 2022, auth0.com/blog/complete-guide-to-react-user-authentication. Accessed 27 July 2023.<br><br>
+    [2] “Modern React Event Calendar | Mobiscroll.” Demo.mobiscroll.com, 10 June 2023, demo.mobiscroll.com/react/eventcalendar. Accessed 27 July 2023.<br><br>
+    [3]Slamic, Tadej. “Spring Boot Authorization Tutorial: Secure an API (Java).” Auth0 - Blog, 7 Oct. 2021, auth0.com/blog/spring-boot-authorization-tutorial-secure-an-api-java/. Accessed 27 July 2023.<br><br>
+    [4]“Event Handling in Spring.” Www.tutorialspoint.com, www.tutorialspoint.com/spring/event_handling_in_spring.htm. Accessed 27 July 2023.<br><br>
+    [5]Romero, Erick. “How to Dockerize a Spring Boot Application.” EPAM Anywhere, 7 July 2023, anywhere.epam.com/en/blog/how-to-dockerize-spring-boot-application. Accessed 27 July 2023.
+</ul>
