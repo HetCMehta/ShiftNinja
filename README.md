@@ -63,7 +63,7 @@ Backend for this application has been written using Spring Boot that has been do
   <img src="images/build_backend.PNG" alt="backend dependencies installation" width="400" />
   <figcaption>Backend build and run.</figcaption>
 </figure>
-![alt text](images/build_backend.PNG "Title Text")
+
 <b>Frontend</b></br>
 
 Frontend for this application has been written using React. To build the frontend -
