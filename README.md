@@ -73,11 +73,10 @@ Frontend for this application has been written using React. To build the fronten
 3. Run the command *npm start* to start the application at port 
 
 <figure align="center">
-  <img src="images/Frontend.png" alt="Frontend application" width="400" />
+  <img src="images/Frontend.PNG" alt="Frontend application" width="400" />
   <figcaption>Frontend application.</figcaption>
 </figure>
 
-![alt text](images/Frontend.PNG "Title Text")
 
 <h2 style ="font-family: Arial">Use Cases</h2> 
 
