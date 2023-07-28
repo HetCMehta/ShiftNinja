@@ -44,6 +44,9 @@
     </tr>
   </table>
 
+<h2 style ="font-family: Arial">Important links</h2>
+Deployment link: <a href="http://shiftninja.canadacentral.cloudapp.azure.com:5000">http://shiftninja.canadacentral.cloudapp.azure.com:5000</a> <br>
+Gitlab link: <a href = "https://git.cs.dal.ca/tanisha/team3project_ti5193.git">https://git.cs.dal.ca/tanisha/team3project_ti5193.git</a>  
 <h2 style ="font-family: Arial">Build instructions</h2>
 
 The application is divided into frontend and backend, the instruction below covers how to build both components and run them
@@ -57,7 +60,7 @@ Backend for this application has been written using Spring Boot that has been do
 3. Run the command *docker compose build* to build the docker image and *docker compose up -d* to create containers and run the APIs on port 8080 
 
 <figure align="center">
-  <img src="images\build_backend.png" alt="backend dependencies installation" width="400" />
+  <img src="images/build_backend.png" alt="backend dependencies installation" width="400" />
   <figcaption>Backend build and run.</figcaption>
 </figure>
 
@@ -70,7 +73,7 @@ Frontend for this application has been written using React. To build the fronten
 3. Run the command *npm start* to start the application at port 
 
 <figure align="center">
-  <img src="images\Frontend.png" alt="backend dependencies installation" width="400" />
+  <img src="images/Frontend.png" alt="backend dependencies installation" width="400" />
   <figcaption>Frontend application.</figcaption>
 </figure>
 
@@ -80,12 +83,12 @@ Frontend for this application has been written using React. To build the fronten
 
 1. After logging in employee can see their schedule week's schedule 
 <figure align="center">
-  <img src="images\Employee_current_shift.png" alt="Employee current shift schedule" width="400" />
+  <img src="images/Employee_current_shift.png" alt="Employee current shift schedule" width="400" />
   <figcaption>Employee Current Shift Schedule.</figcaption>
 </figure>
 2. Employee can also go to Available Shifts page and see all the available shifts and request for any shifts they want to work for.
 <figure align="center">
-  <img src="images\Employee_available_shifts.png" alt="Employee current shift schedule" width="400" />
+  <img src="images/Employee_available_shifts.png" alt="Employee current shift schedule" width="400" />
   <figcaption>Employee Available Shifts Schedule.</figcaption>
 </figure>
 
@@ -94,18 +97,18 @@ Frontend for this application has been written using React. To build the fronten
 1. After logging in Managers can see the upcoming weeks' schedule and see specifics of a shift including time and employee details.
 
 <figure align="center">
-  <img src="images\Manager_current_shifts.png" alt="Employee current shift schedule" width="400" />
+  <img src="images/Manager_current_shifts.png" alt="Employee current shift schedule" width="400" />
   <figcaption>Manager Current Shift Schedule.</figcaption>
 </figure>
 2. Manager can also go to Post Shifts page and post a new shift availability which would be visible to employees and they can request for approval.
 <figure align="center">
-  <img src="images\Manager_post_shift.png" alt="Employee current shift schedule" width="400" />
+  <img src="images/Manager_post_shift.png" alt="Employee current shift schedule" width="400" />
   <figcaption>Manager Post Shifts.</figcaption>
 </figure>
 
 3. After Employees have requested for approval for any shift, manager can check the requests in the Approve Shifts page and select the requests they want to approve, which will then be reflected in Employee's current schedule.
 <figure align="center">
-  <img src="images\Manager_approve_shifts.png" alt="Employee current shift schedule" width="400" />
+  <img src="images/Manager_approve_shifts.png" alt="Employee current shift schedule" width="400" />
   <figcaption>Manager Post Shifts.</figcaption>
 </figure>
 
