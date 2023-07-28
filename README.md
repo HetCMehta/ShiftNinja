@@ -88,7 +88,6 @@ Frontend for this application has been written using React. To build the fronten
 </figure>
 2. Employee can also go to Available Shifts page and see all the available shifts and request for any shifts they want to work for.
 
-![Employee current shift schedule](images/Employee_available_shifts.png "Employee Available shift schedule")
 
 <figure align="center">
   <img src="images/Employee_available_shifts.png" alt="Employee current shift schedule" width="400" />
