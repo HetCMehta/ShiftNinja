@@ -60,10 +60,10 @@ Backend for this application has been written using Spring Boot that has been do
 3. Run the command *docker compose build* to build the docker image and *docker compose up -d* to create containers and run the APIs on port 8080 
 
 <figure align="center">
-  <img src="images/build_backend.png" alt="backend dependencies installation" width="400" />
+  <img src="images/build_backend.PNG" alt="backend dependencies installation" width="400" />
   <figcaption>Backend build and run.</figcaption>
 </figure>
-
+![alt text](images/build_backend.PNG "Title Text")
 <b>Frontend</b></br>
 
 Frontend for this application has been written using React. To build the frontend -
